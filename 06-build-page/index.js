@@ -37,3 +37,33 @@ const createNewFolder = function(dir) {
         }
     })
 }
+const appendToFile = function(file) {
+    fs.readFile(file, 'utf8', (err, data) => { 
+        if (err) {
+            return err;
+        }
+        fs.appendFile(projectCss, `\n/* add from ${path.basename(file)} */\n${data}\n`, (err) => {
+            if (err) {
+                return err;
+            }
+        });
+    });
+};
+const readStyleFiles = function(dir) {
+    fs.readdir(dir, { encoding: 'utf-8', withFileTypes: true}, (err, files) => {
+        if (err) {
+            return err;
+        }
+        files.map(file => {
+            if (path.extname(file.name) === '.css') {
+                if (file.isDirectory()) {
+                    let path = path.join(dir, file.name);
+                    readStyleFiles(path);
+                } else {
+                    appendToFile(path.join(dir, file.name));
+                }
+            }
+        });
+    });
+};
+
