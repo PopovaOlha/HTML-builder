@@ -17,7 +17,7 @@ fs.readdir(secretFolder, { encoding: 'utf-8', withFileTypes: true }, (err, files
                 if (err) {
                     return err;
                 }
-                console.log(`${nameOfFile} - ${fileExt.replace('.', '')} - ${response.size}kb`);
+                console.log(`${nameOfFile} - ${fileExt.replace('.', '')} - ${response.size / 1024}kb`);
            });
         }
     })

@@ -25,3 +25,15 @@ const clearExistFolder = function(dir) {
         });
     });
 };
+const createNewFolder = function(dir) {
+    fs.stat(dir, (e) => {
+        if (!e) {
+            clearExistFolder(dir);
+        }
+    });
+    fs.mkdir(dir, { recursive: true }, (err) => {
+        if (err) {
+            return err;
+        }
+    })
+}
